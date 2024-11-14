@@ -23,7 +23,7 @@ module.exports = (app) => {
         next();
     });
     app.post('/api/user/signup', user.signup);
+    app.post('/api/user/login', user.login);
     app.get('/api/user/getById/:userId', user.getById);
     app.get('/api/user/getAll', user.getAll);
-    app.post('/api/user/profile', upload, user.uploadImage);
 }
