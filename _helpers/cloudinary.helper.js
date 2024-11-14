@@ -7,53 +7,13 @@ cloudinary.config({
 });
 exports.upload = (files) => {
     return new Promise((resolve, reject) => {
-        if (files.document) {
-            if (files.document.length == undefined) {
-                cloudinary.v2.uploader.upload(files.document.filepath, { folder: 'documents' }).then((uploaded) => {
-                    let name = element.originalFilename.substring(0, element.originalFilename.indexOf('.'));
-                    let type = 'image'
-                    if (uploaded.format == "pdf") {
-                        type = 'pdf'
-                    }
-                    let doc = {
-                        name: name,
-                        type: type,
-                        url: uploaded.secure_url
-                    }
-                    resolve(doc);
-                }).catch((err) => {
-                    reject(err);
-                });
-            } else {
-                let count = 0;
-                let allImages = []
-                files.document.forEach(element => {
-                    let document = new Promise((resolve, reject) => {
-                        cloudinary.v2.uploader.upload(element.filepath, { folder: 'documents', }).then((uploaded) => {
-                            let name = element.originalFilename.substring(0, element.originalFilename.indexOf('.'));
-                            let type = 'image'
-                            if (uploaded.format == "pdf") {
-                                type = 'pdf'
-                            }
-                            let doc = {
-                                name: name,
-                                type: type,
-                                url: uploaded.secure_url
-                            }
-                            resolve(doc);
-                        }).catch((err) => {
-                            reject(err);
-                        });
-                    });
-                    document.then((document) => {
-                        allImages.push(document);
-                        count++;
-                        if (count == files.document.length) {
-                            resolve(allImages);
-                        }
-                    })
-                });
-            }
+        if (files.file) {
+            cloudinary.v2.uploader.upload(files.file.filepath, { folder: 'files' }).then((uploaded) => {
+                resolve(uploaded.secure_url);
+            }).catch((err) => {
+                console.log(err)
+                reject(err);
+            });
         }
     });
 }

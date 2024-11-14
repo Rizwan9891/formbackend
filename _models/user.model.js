@@ -5,7 +5,6 @@ const user = new schema({
     name: { type: String, default: "" },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    password: { type: String, required: true },
     addressLine1: { type: String, default: "" },
     addressLine2: { type: String, default: "" },
     city: { type: String, default: "" },
